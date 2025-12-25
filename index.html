@@ -55,11 +55,14 @@
           <button id="reset-btn" class="btn-reset">↺ 초기화</button>
         </div>
 
-        <label class="field file">
-          <span class="label"> </span>
-          <input id="file" accept=".csv,text/csv" type="file" />
-          <span class="hint"> <code>data.csv</code> 자동 로드</span>
-        </label>
+        
+
+       <!-- index.html에서 파일 선택 부분을 다음과 같이 수정 -->
+<label class="field file" style="display: none;">
+  <span class="label"> </span>
+  <input id="file" accept=".csv,text/csv" type="file" />
+  <span class="hint"> <code>data.csv</code> 자동 로드</span>
+</label>
       </div>
 
       <div class="meta">
