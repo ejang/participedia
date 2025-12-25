@@ -191,22 +191,48 @@ a.btn:hover, button.btn:hover{background: var(--bg); border-color: var(--accent)
 .btn.primary:hover { opacity: 0.9; }
 
 .small{font-size:12px;color:var(--muted); flex: 1; margin-right: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
-/* 태그 스타일 */
-.tag-link {
-  cursor: pointer;
-  color: var(--muted);
-  transition: color 0.2s;
+
+/* 태그 스타일 - 알약(Pill) 형태 */
+.tag-pill {
   display: inline-block;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  margin: 2px 4px 2px 0;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  background-color: var(--card2);
+  border: 1px solid var(--line);
+  color: var(--muted);
   line-height: 1.4;
 }
-.tag-link:hover {
-  color: var(--accent);
-  text-decoration: underline;
+.tag-pill:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
 }
-.tag-link::before {
-  content: "#";
-  opacity: 0.6;
-}
+.tag-pill::before { content: "#"; opacity: 0.5; margin-right: 2px; }
+
+/* 태그 색상 팔레트 (JS에서 해시로 할당) */
+/* 다크 모드용 파스텔 톤 */
+.tag-c0 { background: rgba(255, 99, 71, 0.15); color: #ff8c7a; border-color: rgba(255, 99, 71, 0.3); }
+.tag-c1 { background: rgba(255, 165, 0, 0.15); color: #ffb74d; border-color: rgba(255, 165, 0, 0.3); }
+.tag-c2 { background: rgba(255, 215, 0, 0.15); color: #ffd700; border-color: rgba(255, 215, 0, 0.3); }
+.tag-c3 { background: rgba(50, 205, 50, 0.15); color: #90ee90; border-color: rgba(50, 205, 50, 0.3); }
+.tag-c4 { background: rgba(64, 224, 208, 0.15); color: #40e0d0; border-color: rgba(64, 224, 208, 0.3); }
+.tag-c5 { background: rgba(30, 144, 255, 0.15); color: #87cefa; border-color: rgba(30, 144, 255, 0.3); }
+.tag-c6 { background: rgba(138, 43, 226, 0.15); color: #dda0dd; border-color: rgba(138, 43, 226, 0.3); }
+.tag-c7 { background: rgba(255, 105, 180, 0.15); color: #ffb6c1; border-color: rgba(255, 105, 180, 0.3); }
+
+/* 라이트 모드용 짙은 톤 */
+body.light-mode .tag-c0 { color: #d32f2f; background: rgba(211, 47, 47, 0.1); border-color: rgba(211, 47, 47, 0.2); }
+body.light-mode .tag-c1 { color: #f57c00; background: rgba(245, 124, 0, 0.1); border-color: rgba(245, 124, 0, 0.2); }
+body.light-mode .tag-c2 { color: #fbc02d; background: rgba(251, 192, 45, 0.1); border-color: rgba(251, 192, 45, 0.2); }
+body.light-mode .tag-c3 { color: #388e3c; background: rgba(56, 142, 60, 0.1); border-color: rgba(56, 142, 60, 0.2); }
+body.light-mode .tag-c4 { color: #0097a7; background: rgba(0, 151, 167, 0.1); border-color: rgba(0, 151, 167, 0.2); }
+body.light-mode .tag-c5 { color: #1976d2; background: rgba(25, 118, 210, 0.1); border-color: rgba(25, 118, 210, 0.2); }
+body.light-mode .tag-c6 { color: #7b1fa2; background: rgba(123, 31, 162, 0.1); border-color: rgba(123, 31, 162, 0.2); }
+body.light-mode .tag-c7 { color: #c2185b; background: rgba(194, 24, 91, 0.1); border-color: rgba(194, 24, 91, 0.2); }
+
 
 .empty{padding:40px 0 60px;text-align:center;color:var(--muted)}
 .foot{padding:18px 0 28px;color:var(--muted);font-size:12px}
