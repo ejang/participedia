@@ -11,12 +11,17 @@
 <body>
   <header class="top">
     <div class="wrap">
-      <div class="brand">
-        <div class="logo" aria-hidden="true">◎</div>
-        <div>
-          <h1>participedia 라이브러리</h1>
-          <p class="sub">한국어 키워드로 빠르게 검색·필터링</p>
+      <div class="brand-row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">◎</div>
+          <div>
+            <h1>participedia 라이브러리</h1>
+            <p class="sub">한국어 키워드로 빠르게 검색·필터링</p>
+          </div>
         </div>
+        <button id="theme-toggle" class="btn-icon" aria-label="테마 변경">
+          🌙
+        </button>
       </div>
 
       <div class="controls">
@@ -46,26 +51,36 @@
           </select>
         </label>
 
+        <div class="actions">
+          <button id="reset-btn" class="btn-reset">↺ 초기화</button>
+        </div>
+
         <label class="field file">
           <span class="label"> </span>
-          <input id="file" accept=".csv,text/csv" />
+          <input id="file" accept=".csv,text/csv" type="file" />
           <span class="hint"> <code>data.csv</code> 자동 로드</span>
         </label>
       </div>
 
       <div class="meta">
         <div class="pill" id="count">0개</div>
-        <div class="pill secondary" id="updated">데이터: -</div>
+        <div class="pill secondary" id="updated">데이터 로딩 중...</div>
       </div>
     </div>
   </header>
 
   <main class="wrap">
+    <div id="loader" class="loader">
+      <div class="spinner"></div>
+      <p>데이터를 불러오는 중입니다...</p>
+    </div>
+
     <section class="grid" id="cards" aria-live="polite"></section>
 
     <section class="empty" id="empty" hidden>
       <h2>검색 결과가 없어요</h2>
       <p>검색어를 줄이거나 필터를 해제해보세요.</p>
+      <button onclick="document.getElementById('reset-btn').click()" class="btn">필터 모두 해제</button>
     </section>
 
     <footer class="foot">
@@ -74,6 +89,35 @@
       </p>
     </footer>
   </main>
+
+  <!-- 상세 보기 모달 -->
+  <dialog id="detail-modal" class="modal">
+    <div class="modal-inner">
+      <header class="modal-head">
+        <h2 id="m-title" class="modal-title">제목</h2>
+        <button id="m-close" class="btn-icon" aria-label="닫기">✕</button>
+      </header>
+      <div class="modal-body">
+        <div id="m-badges" class="badges mb-4"></div>
+        
+        <div class="section">
+          <h3 class="section-title">요약</h3>
+          <p id="m-desc" class="modal-text"></p>
+        </div>
+
+        <div class="section">
+          <h3 class="section-title">상세 정보</h3>
+          <div id="m-meta" class="meta-grid"></div>
+        </div>
+      </div>
+      <footer class="modal-foot">
+        <span id="m-id" class="small"></span>
+        <a id="m-link" href="#" target="_blank" class="btn primary">원문 페이지 이동 →</a>
+      </footer>
+    </div>
+  </dialog>
+
+  <button id="top-btn" class="btn-top" aria-label="맨 위로 이동" hidden>↑</button>
 
   <script src="app.js"></script>
 </body>
