@@ -177,7 +177,7 @@ function renderCard(r) {
   const usecase = pick(r, ['워크북_추천사용상황', '추천사용상황']);
   const mode = pick(r, ['진행방식', 'facetoface_online_or_both']);
   const type = pick(r, ['유형', 'type']);
-  const id = pick(r, ['ID', 'id']);
+  const tagsStr = pick(r, ['태그(필터용)', 'tags']);
 
   const query = lower(els.q.value);
 
@@ -198,7 +198,6 @@ function renderCard(r) {
 
   const p = document.createElement('p');
   p.className = 'desc';
-  // 카드는 여전히 요약된 내용만 보여줌
   p.innerHTML = query ? highlightText(rawDesc, query) : rawDesc;
   head.appendChild(p);
 
@@ -207,10 +206,32 @@ function renderCard(r) {
 
   const left = document.createElement('div');
   left.className = 'small';
-  left.textContent = `ID ${id || '-'}`;
+  
+  // ID 대신 태그 표시 로직
+  if (tagsStr) {
+    const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
+    // 태그가 너무 많으면 상위 3개만 표시하고 '...' 추가? 일단 다 보여주되 CSS로 wrap
+    tags.forEach(tag => {
+      const tSpan = document.createElement('span');
+      tSpan.className = 'tag-link';
+      tSpan.textContent = tag;
+      tSpan.onclick = (e) => {
+        e.stopPropagation(); // 카드 클릭 방지
+        els.q.value = tag;
+        applyFilters();
+        // 모바일 등에서 스크롤을 위로 올려주는 UX도 고려 가능
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+      left.appendChild(tSpan);
+    });
+  } else {
+    // 태그가 없을 경우 공백 혹은 메시지
+    // left.textContent = '태그 없음'; // 필요하면 주석 해제
+  }
+
   foot.appendChild(left);
 
-  // 버튼 변경: 원문보기 -> 상세보기
+  // 버튼
   const btn = document.createElement('button');
   btn.className = 'btn';
   btn.textContent = '상세 보기';
@@ -324,12 +345,14 @@ els.usecase.addEventListener('change', applyFilters);
 els.mode.addEventListener('change', applyFilters);
 els.type.addEventListener('change', applyFilters);
 
-els.file.addEventListener('change', async (e) => {
-  const f = e.target.files?.[0];
-  if (!f) return;
-  const text = await f.text();
-  loadFromCSVText(text);
-});
+if(els.file) {
+  els.file.addEventListener('change', async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    const text = await f.text();
+    loadFromCSVText(text);
+  });
+}
 
 els.resetBtn.addEventListener('click', () => {
   els.q.value = '';
