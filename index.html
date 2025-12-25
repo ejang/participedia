@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>participedia 라이브러리 (한국어)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <header class="top">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">◎</div>
+        <div>
+          <h1>participedia 라이브러리</h1>
+          <p class="sub">한국어 자료만으로 빠르게 검색·필터링</p>
+        </div>
+      </div>
+
+      <div class="controls">
+        <label class="field">
+          <span class="label">검색</span>
+          <input id="q" type="search" placeholder="예: 참여예산, 숙의, 포럼…" autocomplete="off" />
+        </label>
+
+        <label class="field">
+          <span class="label">분류</span>
+          <select id="usecase">
+            <option value="">전체</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="label">진행방식</span>
+          <select id="mode">
+            <option value="">전체</option>
+          </select>
+        </label>
+
+        <label class="field">
+          <span class="label">유형</span>
+          <select id="type">
+            <option value="">전체</option>
+          </select>
+        </label>
+
+        <label class="field file">
+          <span class="label"> </span>
+          <input id="file" accept=".csv,text/csv" />
+          <span class="hint"> <code>data.csv</code> 자동 로드</span>
+        </label>
+      </div>
+
+      <div class="meta">
+        <div class="pill" id="count">0개</div>
+        <div class="pill secondary" id="updated">데이터: -</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="grid" id="cards" aria-live="polite"></section>
+
+    <section class="empty" id="empty" hidden>
+      <h2>검색 결과가 없어요</h2>
+      <p>검색어를 줄이거나 필터를 해제해보세요.</p>
+    </section>
+
+    <footer class="foot">
+      <p>
+        데이터 출처(원문): <a href="https://participedia.net/">participedia.org</a> 이 페이지는 영어 내용을 한국어로 정리했습니다.
+      </p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
