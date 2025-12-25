@@ -190,7 +190,24 @@ a.btn:hover, button.btn:hover{background: var(--bg); border-color: var(--accent)
 }
 .btn.primary:hover { opacity: 0.9; }
 
-.small{font-size:12px;color:var(--muted)}
+.small{font-size:12px;color:var(--muted); flex: 1; margin-right: 10px; display: flex; flex-wrap: wrap; gap: 4px; }
+/* 태그 스타일 */
+.tag-link {
+  cursor: pointer;
+  color: var(--muted);
+  transition: color 0.2s;
+  display: inline-block;
+  line-height: 1.4;
+}
+.tag-link:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.tag-link::before {
+  content: "#";
+  opacity: 0.6;
+}
+
 .empty{padding:40px 0 60px;text-align:center;color:var(--muted)}
 .foot{padding:18px 0 28px;color:var(--muted);font-size:12px}
 
@@ -335,8 +352,4 @@ dialog::backdrop {
 @media (max-width: 600px) {
   dialog.modal { max-width: 90%; }
   .meta-grid { grid-template-columns: 1fr; }
-}
-/* styles.css에 추가 */
-.field.file {
-  display: none;
 }
