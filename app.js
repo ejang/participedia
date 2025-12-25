@@ -117,6 +117,31 @@ function highlightText(text, query) {
   return text.replace(regex, '<mark class="highlight">$1</mark>');
 }
 
+// 태그 색상 해시 함수
+function getTagColorClass(str) {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    hash = str.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const c = Math.abs(hash) % 8; // 8가지 색상
+  return `tag-c${c}`;
+}
+
+// 태그 요소 생성 헬퍼
+function createTagEl(tag) {
+  const span = document.createElement('span');
+  span.className = `tag-pill ${getTagColorClass(tag)}`;
+  span.textContent = tag;
+  span.onclick = (e) => {
+    e.stopPropagation();
+    els.q.value = tag;
+    applyFilters();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if(els.modal.open) els.modal.close();
+  };
+  return span;
+}
+
 // 모달 열기 함수
 function openModal(r) {
   const title = pick(r, ['제목(한국어)', '제목(한국어-자동)', '제목', 'title']) || '(제목 없음)';
@@ -155,7 +180,27 @@ function openModal(r) {
     if(!m.val) return;
     const item = document.createElement('div');
     item.className = 'meta-item';
-    item.innerHTML = `<span class="meta-label">${m.label}</span><span class="meta-val">${m.val}</span>`;
+    
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'meta-label';
+    labelSpan.textContent = m.label;
+    item.appendChild(labelSpan);
+
+    const valDiv = document.createElement('div');
+    valDiv.className = 'meta-val';
+
+    if (m.label === '태그') {
+      // 태그의 경우 | 로 분리하여 알약 버튼으로 생성
+      // 공백 제거 및 빈 문자열 필터링
+      const tags = m.val.split('|').map(t => t.trim()).filter(t => t);
+      tags.forEach(tag => {
+        valDiv.appendChild(createTagEl(tag));
+      });
+    } else {
+      valDiv.textContent = m.val;
+    }
+
+    item.appendChild(valDiv);
     els.mMeta.appendChild(item);
   });
 
@@ -207,26 +252,12 @@ function renderCard(r) {
   const left = document.createElement('div');
   left.className = 'small';
   
-  // ID 대신 태그 표시 로직
+  // 카드 하단 태그 표시 ( | 구분자 사용)
   if (tagsStr) {
-    const tags = tagsStr.split(',').map(t => t.trim()).filter(t => t);
-    // 태그가 너무 많으면 상위 3개만 표시하고 '...' 추가? 일단 다 보여주되 CSS로 wrap
+    const tags = tagsStr.split('|').map(t => t.trim()).filter(t => t);
     tags.forEach(tag => {
-      const tSpan = document.createElement('span');
-      tSpan.className = 'tag-link';
-      tSpan.textContent = tag;
-      tSpan.onclick = (e) => {
-        e.stopPropagation(); // 카드 클릭 방지
-        els.q.value = tag;
-        applyFilters();
-        // 모바일 등에서 스크롤을 위로 올려주는 UX도 고려 가능
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-      left.appendChild(tSpan);
+      left.appendChild(createTagEl(tag));
     });
-  } else {
-    // 태그가 없을 경우 공백 혹은 메시지
-    // left.textContent = '태그 없음'; // 필요하면 주석 해제
   }
 
   foot.appendChild(left);
