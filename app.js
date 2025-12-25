@@ -3,7 +3,6 @@ const els = {
   usecase: document.getElementById('usecase'),
   mode: document.getElementById('mode'),
   type: document.getElementById('type'),
-  file: document.getElementById('file'),
   cards: document.getElementById('cards'),
   empty: document.getElementById('empty'),
   count: document.getElementById('count'),
@@ -324,12 +323,7 @@ els.usecase.addEventListener('change', applyFilters);
 els.mode.addEventListener('change', applyFilters);
 els.type.addEventListener('change', applyFilters);
 
-els.file.addEventListener('change', async (e) => {
-  const f = e.target.files?.[0];
-  if (!f) return;
-  const text = await f.text();
-  loadFromCSVText(text);
-});
+// 파일 업로드 이벤트 제거됨
 
 els.resetBtn.addEventListener('click', () => {
   els.q.value = '';
