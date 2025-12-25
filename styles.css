@@ -336,3 +336,7 @@ dialog::backdrop {
   dialog.modal { max-width: 90%; }
   .meta-grid { grid-template-columns: 1fr; }
 }
+/* styles.css에 추가 */
+.field.file {
+  display: none;
+}
